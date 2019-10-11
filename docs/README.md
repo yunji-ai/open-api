@@ -55,7 +55,6 @@
   - 对参数按照key=value的格式，并按照参数名ASCII字典序，排序参数包括公共参数和接口自定义参数。不包括公共请求参数中的**signature**参数；
   - 如果参数的值为空不参与签名；
   - 参数名区分大小写；
-  - 使用UTF-8字符集对每个请求参数的名称和参数取值进行URL编码，URL编码规则如下：对于字符A~Z、a~z、0~9以及字符-、_、.和~不编码。对于其他字符编码成%XY的格式，其中XY是字符对应ASCII码的16进制。例如：半角双引号（"）对应的编码为：%22。空格（ ）需要被编码成：%20，而不是+。
 - 计算签名HMAC值。注意计算签名时使用的Key就是用户持有的`accessKeySecret`并加上一个“&”字符(ASCII:38),使用的哈希算法是SHA1。
 - 按照Base64编码规则将HMAC值编码成字符串，得到签名值。
 - 将签名值作为`signature`添加到请求参数中。
@@ -84,6 +83,7 @@
 
 假设accessKeyId为testId，accessKeySecret为:testsecret,则用于计算的HMAC的key为：testsecret&。
 计算得到的签名值为：`kRA2cnpJVacIhDMzXnoNZG9tDCI`
+
 最终得到的发送数据为：
 ```json
 {
@@ -133,14 +133,14 @@
 | action        | String                        | 是       | CreateOrder | 系统规定参数。取值：CreateOrder |
 | orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |             | 订单信息                        |
 | amount        | Decimal                       | 是       | 29.00       | 订单支付金额                    |
-| thirdPayType  | Int                           | 是       |             | 3：预付                         |
+| thirdPayType  | Int                           | 是       | 3           | 3：预付                         |
 | contactInfo   | ContactInfoType               | 是       |             | 订单联系人信息                  |
 
 #### OrderFormInfoType参数说明
-| 名称      | 类型   | 是否必选 | 示例值 | 描述         |
-| --------- | ------ | -------- | ------ | ------------ |
-| productId | String | 是       |        | 商品Id       |
-| quantity  | Int    | 是       | 1      | 商品购买数量 |
+| 名称      | 类型   | 是否必选 | 示例值                   | 描述         |
+| --------- | ------ | -------- | ------------------------ | ------------ |
+| productId | String | 是       | 5a38d03a60b6286d9c544f58 | 商品Id       |
+| quantity  | Int    | 是       | 1                        | 商品购买数量 |
 
 #### ContactInfoType参数说明
 | 名称             | 类型   | 是否必选 | 示例值      | 描述                                                             |
@@ -231,20 +231,20 @@
 | unitPrice   | Decimal | 2      | 单价       |
 
 #### orderTaskInfoType参数说明
-| 名称          | 类型                   | 示例值 | 描述                                                                   |
-| ------------- | ---------------------- | ------ | ---------------------------------------------------------------------- |
-| orderTaskId   | String                 |        | 订单子任务Id                                                           |
-| detail        | List&lt;DetialType&gt; |        | 备注                                                                   |
-| processStatus | Int                    | 1      | 任务状态                                                               |
-| taskType      | Int                    | 1      | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
+| 名称          | 类型                   | 示例值                   | 描述                                                                   |
+| ------------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| orderTaskId   | String                 | 5a38d03a60b6286d9c544f58 | 订单子任务Id                                                           |
+| detail        | List&lt;DetialType&gt; |                          | 备注                                                                   |
+| processStatus | Int                    | 1                        | 任务状态                                                               |
+| taskType      | Int                    | 1                        | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
 
 #### DetialType参数说明
 | 名称        | 类型   | 示例值                                              | 描述         |
 | ----------- | ------ | --------------------------------------------------- | ------------ |
-| productId   | String |                                                     | 订单子任务Id |
-| productName | String |                                                     | 备注         |
-| imageUrl    | String | http://images.sp.yunjichina.com.cn/goods/757a19.png | 任务状态     |
-| quantity    | Int    | 1                                                   | 任务状态     |
+| productId   | String | 5a38d03a60b6286d9c544f58                            | 商品唯一标识 |
+| productName | String | 矿泉水                                              | 商品名称     |
+| imageUrl    | String | http://images.sp.yunjichina.com.cn/goods/757a19.png | 商品缩略图   |
+| quantity    | Int    | 1                                                   | 商品数量     |
 
 #### OrderBasicInfo参数说明
 | 名称         | 类型    | 示例值 | 描述               |
@@ -307,7 +307,7 @@
         "orderStatus": 2,
         "orderItemInfos": [
             {
-                "imageUrl": "http://images.sp.yunjichina.com.cn/goods/757a192c8212171e8b113982dda5a357.png",
+                "imageUrl": "http://images.sp.yunjichina.com.cn/goods/sd23.png",
                 "productId": "5a38d03a60b6286d9c544f58",
                 "productName": "矿泉水",
                 "amount": 22,
@@ -323,7 +323,7 @@
                 "detail": {
                     "productId": "5a38d03a60b6286d9c544f58",
                     "productName": "矿泉水",
-                    "imageUrl": "http://images.sp.yunjichina.com.cn/goods/757a192c8212171e8b113982dda5a357.png",
+                    "imageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
                     "quantity": 1
                 }
             }
@@ -356,16 +356,16 @@
 | ----------- | --------------- | ------------------------------------ | ------------ |
 | requestId   | String          | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
 | productList | ProductItemType |                                      | 产品列表详情 |
-| pagination  | PaginationType  |                                      | 产品列表详情 |
+| pagination  | PaginationType  |                                      | 分页信息     |
 
 #### ProductItemType参数说明
-| 名称        | 类型    | 示例值                                                                        | 描述         |
-| ----------- | ------- | ----------------------------------------------------------------------------- | ------------ |
-| productName | String  | 矿泉水                                                                        | 商品名称     |
-| productId   | String  | 5a38d03a60b6286d9c544f58                                                      | 商品唯一标识 |
-| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/757a192c8212171e8b113982dda5a357.png | 产品图片     |
-| price       | Decimal | 11.20                                                                         | 商品价格     |
-| storage     | Int     | 999                                                                           | 商品库存     |
+| 名称        | 类型    | 示例值                                         | 描述         |
+| ----------- | ------- | ---------------------------------------------- | ------------ |
+| productName | String  | 矿泉水                                         | 商品名称     |
+| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
+| price       | Decimal | 11.20                                          | 商品价格     |
+| storage     | Int     | 999                                            | 商品库存     |
 
 #### PaginationType参数说明
 | 名称     | 类型 | 示例值 | 描述     |
