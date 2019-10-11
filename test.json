@@ -1,0 +1,16 @@
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "productList": [
+        {
+            "productName": "矿泉水",
+            "productId": "5a38d03a60b6286d9c544f58",
+            "price": 1,
+            "storage": 23
+        }
+    ],
+    "pagination": {
+        "current": 1,
+        "pageSize": 20,
+        "total": 99
+    }
+}
