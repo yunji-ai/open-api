@@ -128,13 +128,14 @@
 ### CreateOrder
 调用createOrder创建订单
 #### 请求参数
-| 名称          | 类型                          | 是否必选 | 示例值      | 描述                            |
-| ------------- | ----------------------------- | -------- | ----------- | ------------------------------- |
-| action        | String                        | 是       | CreateOrder | 系统规定参数。取值：CreateOrder |
-| orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |             | 订单信息                        |
-| amount        | Decimal                       | 是       | 29.00       | 订单支付金额                    |
-| thirdPayType  | Int                           | 是       | 3           | 3：预付                         |
-| contactInfo   | ContactInfoType               | 是       |             | 订单联系人信息                  |
+| 名称          | 类型                          | 是否必选 | 示例值                   | 描述                               |
+| ------------- | ----------------------------- | -------- | ------------------------ | ---------------------------------- |
+| action        | String                        | 是       | CreateOrder              | 系统规定参数。取值：CreateOrder    |
+| userId        | String                        | 是       | 5a38d03a60b6286d9c544f58 | 用户唯一标识，可通过CreateUser创建 |
+| orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |                          | 订单信息                           |
+| amount        | Decimal                       | 是       | 29.00                    | 订单支付金额                       |
+| thirdPayType  | Int                           | 是       | 3                        | 3：预付                            |
+| contactInfo   | ContactInfoType               | 是       |                          | 订单联系人信息                     |
 
 #### OrderFormInfoType参数说明
 | 名称      | 类型   | 是否必选 | 示例值                   | 描述         |
@@ -146,7 +147,7 @@
 | 名称             | 类型   | 是否必选 | 示例值      | 描述                                                             |
 | ---------------- | ------ | -------- | ----------- | ---------------------------------------------------------------- |
 | recipientAddress | String | 是       | 0701        | 酒店唯一房间编号，应与机器人点位一一对应，如对应不上，将返回报错 |
-| recipientPhone   | String | 是       | 16612561256 | 预订人手机号                                                     |
+| recipientPhone   | String | 否       | 16612561256 | 预订人手机号                                                     |
 | recipientName    | String | 否       | 张三        | 预订人姓名                                                       |
 
 #### 返回数据
