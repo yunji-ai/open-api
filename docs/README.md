@@ -19,22 +19,17 @@
 #### 请求参数
 
 每个请求都需要指定如下信息：
-
-- 要执行的操作：Action参数。
 - 操作接口所特有的请求参数。
 
 ### 公共参数
 
 #### 公共请求参数
-| 名称            | 类型   | 是否必需 | 描述                                                                                     |
-| --------------- | ------ | -------- | ---------------------------------------------------------------------------------------- |
-| action          | String | 是       | API的名称                                                                                |
-| version         | String | 是       | 版本号，当前版本为v1                                                                     |
-| signature       | String | 是       | 消息签名                                                                                 |
-| signatureMethod | String | 是       | 签名方式，目前仅支持HMAC-SHA1                                                            |
-| signatureNonce  | String | 是       | 唯一随机数                                                                               |
-| accessKeyId     | String | 是       | 访问秘钥                                                                                 |
-| timestamp       | String | 是       | 请求时间戳，日期格式按照ISO8601标准表示，并需要使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ |
+| 名称           | 类型   | 是否必需 | 描述                                                                                     |
+| -------------- | ------ | -------- | ---------------------------------------------------------------------------------------- |
+| signature      | String | 是       | 消息签名                                                                                 |
+| signatureNonce | String | 是       | 唯一随机数                                                                               |
+| accessKeyId    | String | 是       | 访问秘钥                                                                                 |
+| timestamp      | String | 是       | 请求时间戳，日期格式按照ISO8601标准表示，并需要使用UTC时间。格式为：YYYY-MM-DDThh:mm:ssZ |
 #### 公共返回参数
 | 名称      | 类型   | 描述                                                                              |
 | --------- | ------ | --------------------------------------------------------------------------------- |
@@ -62,10 +57,7 @@
 以CreateUser为例，假设传送的参数如下：
 ```json
 {
-    "action": "CreateUser",
-    "version": "v1",
-    "signature": "0802",
-    "signatureMethod": "HMAC-SHA1",
+
     "signatureNonce": "53c593e7-766d-4646-8b58-0b795ded0ed6",
     "accessKeyId": "testid",
     "timestamp": "2019-10-10T08:26:01Z",
@@ -74,12 +66,11 @@
 }
 ```
 - 对参数按照key=value的格式，并按照参数名ASCII字典序排序如下：
-`
-    "action=CreateUser&"
-`
+    "accessKeyId=testid&current=1&pageSize=20&signatureNonce=53c593e7-766d-4646-8b58-0b795ded0ed6&timestamp=2019-10-10T08:26:01Z"
+
 
 对应的规范化请求字符串为：
-`ssdfadsgffgakjdakjgfdajgfkakdjfadsf`
+`1926466a30c065e800d8b1e53cd5b457e8694de2`
 
 假设accessKeyId为testId，accessKeySecret为:testsecret,则用于计算的HMAC的key为：testsecret&。
 计算得到的签名值为：`kRA2cnpJVacIhDMzXnoNZG9tDCI`
@@ -87,13 +78,12 @@
 最终得到的发送数据为：
 ```json
 {
-    "action": "CreateUser",
-    "version": "v1",
-    "signature": "0802",
-    "signatureMethod": "HMAC-SHA1",
+    "signature": "1926466a30c065e800d8b1e53cd5b457e8694de2",
     "signatureNonce": "53c593e7-766d-4646-8b58-0b795ded0ed6",
     "accessKeyId": "testId",
     "timestamp": "2019-10-10T08:26:01Z",
+    "pageSize": 20,
+    "current": 1
 }
 ```
 
@@ -103,13 +93,7 @@
 - 返回示例
 ```json
 {
-    "action": "CreateUser",
-    "version": "v1",
-    "signature": "0802",
-    "signatureMethod": "HMAC-SHA1",
-    "signatureNonce": "0802",
-    "accessKeyId": "0802",
-    "timestamp": "0802",
+    "requestId":"0139d33c-5204-4a6a-8830-9947c6bee3c0"
 }
 ```
 #### 错误结果
@@ -124,18 +108,17 @@
       "message":"action is not valid"
   }
 ```
-## 订单类接口
-### CreateOrder
-调用createOrder创建订单
+## 订单
+### 创建商品订单
+根据所选商品id创建订单，返回订单唯一标识符
+> POST /v1/order/createPoiOrder
 #### 请求参数
-| 名称          | 类型                          | 是否必选 | 示例值                   | 描述                               |
-| ------------- | ----------------------------- | -------- | ------------------------ | ---------------------------------- |
-| action        | String                        | 是       | CreateOrder              | 系统规定参数。取值：CreateOrder    |
-| userId        | String                        | 是       | 5a38d03a60b6286d9c544f58 | 用户唯一标识，可通过CreateUser创建 |
-| orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |                          | 订单信息                           |
-| amount        | Decimal                       | 是       | 29.00                    | 订单支付金额                       |
-| thirdPayType  | Int                           | 是       | 3                        | 3：预付                            |
-| contactInfo   | ContactInfoType               | 是       |                          | 订单联系人信息                     |
+| 名称          | 类型                          | 是否必选 | 示例值                   | 描述                                 |
+| ------------- | ----------------------------- | -------- | ------------------------ | ------------------------------------ |
+| userId        | String                        | 是       | 5a38d03a60b6286d9c544f58 | 用户唯一标识，可通过创建用户接口创建 |
+| orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |                          | 订单信息                             |
+| thirdPayType  | Int                           | 是       | 3                        | 3：预付                              |
+| contactInfo   | ContactInfoType               | 是       |                          | 订单联系人信息                       |
 
 #### OrderFormInfoType参数说明
 | 名称      | 类型   | 是否必选 | 示例值                   | 描述         |
@@ -157,17 +140,15 @@
 | orderInfo | OrderInfoType |                                      | 订单信息 |
 
 #### OrderInfoType参数说明
-| 名称       | 类型   | 示例值               | 描述         |
-| ---------- | ------ | -------------------- | ------------ |
-| orderId    | String | 223445452233         | 订单唯一标识 |
-| createDate | String | 2019-10-01T12:00:18Z | 创建时间     |
+| 名称       | 类型   | 示例值               | 描述     |
+| ---------- | ------ | -------------------- | -------- |
+| orderSN    | Long   | 223445452233         | 订单号   |
+| createDate | String | 2019-10-01T12:00:18Z | 创建时间 |
 
 #### 示例
 请求示例
 ```json
 {
-    "action": "CreateOrder",
-    "amount": 39.50,
     "orderFormInfo": [
         {
             "productId": "5a38d03a60b6286d9c544f58",
@@ -177,7 +158,6 @@
     "thirdPayType": 3,
     "contactInfo": {
         "recipientAddress": "0821",
-        "recipientPhone": 16619796626
     }
     /* 公共请求参数 */
 }
@@ -188,19 +168,18 @@
 {
     "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
     "orderInfo": {
-        "orderId": 223445452233,
+        "orderSN": 223445452233,
         "createDate": "2019-10-01T12:00:18Z"
     }
 }
 ```
 
-### GetOrderInfo
-调用GetOrderInfo获取订单详细信息
+### 根据订单号查询订单
+> GET /v1/order/queryByOrderSN
 #### 请求参数
-| 名称    | 类型   | 是否必选 | 示例值       | 描述                             |
-| ------- | ------ | -------- | ------------ | -------------------------------- |
-| action  | String | 是       | GetOrderInfo | 系统规定参数。取值：GetOrderInfo |
-| orderId | Long   | 是       | CreateOrder  | 订单ID                           |
+| 名称    | 类型 | 是否必选 | 示例值     | 描述   |
+| ------- | ---- | -------- | ---------- | ------ |
+| orderSN | Long | 是       | 1274692748 | 订单号 |
 
 #### 返回参数
 | 名称      | 类型          | 示例值                               | 描述   |
@@ -210,7 +189,7 @@
 #### OrderInfoType参数说明
 | 名称           | 类型                          | 示例值               | 描述                             |
 | -------------- | ----------------------------- | -------------------- | -------------------------------- |
-| orderId        | Long                          | 1467803671           | 订单唯一标识                     |
+| orderSN        | Long                          | 1467803671           | 订单唯一标识                     |
 | orderName      | String                        | 矿泉水 * 1           | 订单名称                         |
 | createDate     | String                        | 2019-10-01T12:00:18Z | 订单创建时间                     |
 | orderStatus    | Int                           | 0                    | 订单若无退订，订单最终状态为成交 |
@@ -221,25 +200,25 @@
 
 
 #### OrderItemInfoType参数说明
-| 名称        | 类型    | 示例值 | 描述       |
-| ----------- | ------- | ------ | ---------- |
-| imageUrl    | String  | 1.50   | 图片地址   |
-| productId   | String  | 0.00   | 商品id     |
-| productName | String  | 矿泉水 | 商品名称   |
-| categoryID  | String  | 2343   | 类型id     |
-| amount      | String  | 矿泉水 | 商品总卖价 |
-| quantity    | Int     | 2      | 数量       |
-| unitPrice   | Decimal | 2      | 单价       |
+| 名称        | 类型    | 示例值                                              | 描述                                |
+| ----------- | ------- | --------------------------------------------------- | ----------------------------------- |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/757a19.png | 图片地址                            |
+| productId   | String  | 5a38d03a60b6286d9c544f58                            | 商品id                              |
+| productName | String  | 矿泉水                                              | 商品名称                            |
+| productType | Int     | 1                                                   | 商品类型:1-普通商品,2-赠品,3-客需品 |
+| amount      | Decimal | 3.00                                                | 商品总卖价                          |
+| quantity    | Int     | 2                                                   | 数量                                |
+| unitPrice   | Decimal | 1.50                                                | 单价                                |
 
 #### orderTaskInfoType参数说明
 | 名称          | 类型                   | 示例值                   | 描述                                                                   |
 | ------------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
 | orderTaskId   | String                 | 5a38d03a60b6286d9c544f58 | 订单子任务Id                                                           |
-| detail        | List&lt;DetialType&gt; |                          | 备注                                                                   |
+| detail        | List&lt;DetailType&gt; |                          | 备注                                                                   |
 | processStatus | Int                    | 1                        | 任务状态                                                               |
 | taskType      | Int                    | 1                        | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
 
-#### DetialType参数说明
+#### DetailType参数说明
 | 名称        | 类型   | 示例值                                              | 描述         |
 | ----------- | ------ | --------------------------------------------------- | ------------ |
 | productId   | String | 5a38d03a60b6286d9c544f58                            | 商品唯一标识 |
@@ -247,20 +226,17 @@
 | imageUrl    | String | http://images.sp.yunjichina.com.cn/goods/757a19.png | 商品缩略图   |
 | quantity    | Int    | 1                                                   | 商品数量     |
 
-#### OrderBasicInfo参数说明
-| 名称         | 类型    | 示例值 | 描述               |
-| ------------ | ------- | ------ | ------------------ |
-| amount       | Decimal | 1.50   | 原始下单总价(不变) |
-| remarks      | String  |        | 备注,默认为空      |
-| totalAmount  | Decimal | 0.00   | 订单应收金额       |
-| actualAmount | Decimal | 0.00   | 订单实收金额       |
+#### OrderBasicInfoType参数说明
+| 名称   | 类型    | 示例值 | 描述               |
+| ------ | ------- | ------ | ------------------ |
+| amount | Decimal | 1.50   | 原始下单总价(不变) |
 
 #### ExtendPropertyType参数说明
 | 名称             | 类型   | 示例值      | 描述                               |
 | ---------------- | ------ | ----------- | ---------------------------------- |
 | recipientAddress | String | 0801        | 房间号                             |
 | recipientPhone   | String | 12312341234 | 收货人电话                         |
-| recipientName    | String |             | 若用户没有填写姓名，此字段默认为空 |
+| recipientName    | String | 张三        | 若用户没有填写姓名，此字段默认为空 |
 
 #### 订单状态对应关系
 | 值  | 描述   |
@@ -289,20 +265,16 @@
 
 #### 示例
 请求参数
-```json
-{
-    "action": "GetOrderInfo",
-    "orderId": 223445452233
-     /* 公共请求参数 */
-}
-```
+
+https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+
 
 正常返回示例
 ```json
 {
     "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
     "orderInfo": {
-        "orderId": 223445452233,
+        "orderSN": 223445452233,
         "orderName": "矿泉水 * 1",
         "createDate": "2019-10-01T12:00:18Z",
         "orderStatus": 2,
@@ -311,9 +283,9 @@
                 "imageUrl": "http://images.sp.yunjichina.com.cn/goods/sd23.png",
                 "productId": "5a38d03a60b6286d9c544f58",
                 "productName": "矿泉水",
-                "amount": 22,
-                "quantity": 1,
-                "unitPrice": 2.2
+                "amount": 5.00,
+                "quantity": 2,
+                "unitPrice": 2.50
             }
         ],
         "orderTaskInfos": [
@@ -330,27 +302,24 @@
             }
         ],
         "orderBasicInfos": {
-            "amount": 22,
-            "totalAmount": 22,
-            "actualAmount": 22
+            "amount": 5.00,
         },
         "extendProperty": {
             "recipientAddress": "0801",
-            "recipientPhone": 18117782341
         }
     }
 }
 ```
 
-## 商品类
-### ListProducts
+## 商品
+### 获取全部商品列表
 获取产品列表，注意：支持分页，每页最多返回100条,默认值为20,页码从1开始，默认为第一页
+> GET /v1/goods/queryByStore
 #### 请求参数
-| 名称     | 类型   | 是否必选 | 示例值       | 描述                             |
-| -------- | ------ | -------- | ------------ | -------------------------------- |
-| action   | String | 是       | ListProducts | 系统规定参数。取值：ListProducts |
-| pageSize | Int    | 否       | 20           | 条数                             |
-| current  | Int    | 否       | 1            | 当前页数                         |
+| 名称     | 类型 | 是否必选 | 示例值 | 描述     |
+| -------- | ---- | -------- | ------ | -------- |
+| pageSize | Int  | 否       | 20     | 条数     |
+| current  | Int  | 否       | 1      | 当前页数 |
 
 #### 返回参数
 | 名称        | 类型            | 示例值                               | 描述         |
@@ -365,7 +334,8 @@
 | productName | String  | 矿泉水                                         | 商品名称     |
 | productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
 | imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
-| price       | Decimal | 11.20                                          | 商品价格     |
+| unitPrice   | Decimal | 11.20                                          | 商品单价     |
+| actualPrice | Decimal | 11.20                                          | 实际售价     |
 | storage     | Int     | 999                                            | 商品库存     |
 
 #### PaginationType参数说明
@@ -377,14 +347,9 @@
 
 #### 示例
 请求参数
-```json
-{
-    "action": "ListProducts",
-    "pageSize": 20,
-    "current": 1
-     /* 公共请求参数 */
-}
-```
+
+https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+
 正常返回示例
 ```json
 {
@@ -393,7 +358,9 @@
         {
             "productName": "矿泉水",
             "productId": "5a38d03a60b6286d9c544f58",
-            "price": 1,
+            "imageUrl"::"http://images.sp.yunjichina.com.cn/goods/s.png",
+            "unitPrice": 1.50,
+            "actualPrice": 1.50,
             "storage": 23
         }
     ],
@@ -405,15 +372,128 @@
 }
 ```
 
-## 用户类
-### CreateUser
+### 获取客用品代码列表
+获取客用品分类代码列表。
+
+>GET /v1/goods/queryRoomItemsCodeList
+
+#### 返回参数
+| 名称              | 类型                          | 示例值                               | 描述               |
+| ----------------- | ----------------------------- | ------------------------------------ | ------------------ |
+| requestId         | String                        | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id             |
+| version           | Int                           | 20190828                             | 当前分类版本号     |
+| RoomItemsCodeList | List&lt;RoomItemsCodeType&gt; |                                      | 客用品分类代码列表 |
+
+#### RoomItemsCodeType参数说明
+| 名称       | 类型   | 示例值 | 描述                               |
+| ---------- | ------ | ------ | ---------------------------------- |
+| code       | Int    | 10001  | 客需品对应类别id                   |
+| categoryId | Int    | 1      | 客需品类别id,1-洗护用品;2-生活用品 |
+| comment    | String | 沐浴露 | 客需品对应分类名称                 |
+
+#### 示例
+请求参数
+https://open-api.yunjiai.cn/v1/goods/queryRoomItemsCode?signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+
+正常返回示例
+```json
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "version": 20190828,
+    "RoomItemsCodeList": [
+        {
+            "code":10001,
+            "categoryId":1,
+            "comment":"沐浴露"
+        },
+        {
+            "code":10002,
+            "categoryId":1,
+            "comment":"洗发水"
+        },
+        {
+            "code":20001,
+            "categoryId":2,
+            "comment":"免费水"
+        }
+    ],
+}
+```
+
+#### 根据客用品代码获取对应分类商品列表
+
+根据客用品代码获取对应门店下分类商品列表，注意：支持分页，每页最多返回100条,默认值为20,页码从1开始，默认为第一页。
+
+>GET /v1/goods/queryByRoomItemsCode
+
 #### 请求参数
-| 名称        | 类型   | 是否必选 | 示例值          | 描述                                                              |
-| ----------- | ------ | -------- | --------------- | ----------------------------------------------------------------- |
-| action      | String | 是       | ListProducts    | 系统规定参数。取值：ListProducts                                  |
-| uidKey      | String | 是       | 20              | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成uid |
-| mobilePhone | String | 否       | 86-178398290238 | 用户手机号                                                        |
-| userName    | String | 否       | 张三            | 指定用户名                                                        |
+| 名称          | 类型 | 是否必选 | 示例值 | 描述              |
+| ------------- | ---- | -------- | ------ | ----------------- |
+| roomItemsCode | Int  | 是       | 10001  | 客用品分类代码    |
+| pageSize      | Int  | 否       | 20     | 条数，默认值20    |
+| current       | Int  | 否       | 1      | 当前页数，默认值1 |
+
+#### 返回参数
+| 名称        | 类型            | 示例值                               | 描述         |
+| ----------- | --------------- | ------------------------------------ | ------------ |
+| requestId   | String          | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| productList | ProductItemType |                                      | 产品列表详情 |
+| pagination  | PaginationType  |                                      | 分页信息     |
+
+#### ProductItemType参数说明
+| 名称        | 类型    | 示例值                                         | 描述         |
+| ----------- | ------- | ---------------------------------------------- | ------------ |
+| productName | String  | 矿泉水                                         | 商品名称     |
+| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
+| unitPrice   | Decimal | 11.20                                          | 商品单价     |
+| actualPrice | Decimal | 11.20                                          | 实际售价     |
+| storage     | Int     | 999                                            | 商品库存     |
+
+#### PaginationType参数说明
+| 名称     | 类型 | 示例值 | 描述     |
+| -------- | ---- | ------ | -------- |
+| current  | Int  | 1      | 当前页数 |
+| pageSize | Int  | 20     | 条数     |
+| total    | Int  | 48     | 总数     |
+
+#### 示例
+请求参数
+
+https://open-api.yunjiai.cn/v1/goods/queryByRoomItemsCode?roomItemsCode=10001&current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+
+正常返回示例
+```json
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "productList": [
+        {
+            "productName": "矿泉水",
+            "productId": "5a38d03a60b6286d9c544f58",
+            "imageUrl"::"http://images.sp.yunjichina.com.cn/goods/s.png",
+            "unitPrice": 1.50,
+            "actualPrice": 1.50,
+            "storage": 23
+        }
+    ],
+    "pagination": {
+        "current": 1,
+        "pageSize": 20,
+        "total": 99
+    }
+}
+```
+
+## 用户
+### 创建用户标识
+客户可根据自己所拥有的唯一标识(房间号，设备号)生成在平台生成唯一用户标识，如有填写手机号或用户名等需求，可对应输入相应字段进行注册
+> POST /v1/user/createUser
+#### 请求参数
+| 名称        | 类型   | 是否必选 | 示例值          | 描述                                                                 |
+| ----------- | ------ | -------- | --------------- | -------------------------------------------------------------------- |
+| uidKey      | String | 是       | 0802            | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| mobilePhone | String | 否       | 86-178398290238 | 用户手机号                                                           |
+| userName    | String | 否       | 张三            | 指定用户名                                                           |
 
 #### 返回参数
 | 名称      | 类型   | 示例值                               | 描述         |
@@ -425,7 +505,6 @@
 请求参数
 ```json
 {
-    "action": "CreateUser",
     "uidKey": "0802",
      /* 公共请求参数 */
 }
