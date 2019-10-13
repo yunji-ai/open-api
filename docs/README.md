@@ -375,16 +375,16 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatur
 ### 获取客用品代码列表
 获取客用品分类代码列表。
 
->GET /v1/goods/queryRoomItemsCodeList
+>GET /v1/goods/guestSuppliesList
 
 #### 返回参数
-| 名称              | 类型                          | 示例值                               | 描述               |
-| ----------------- | ----------------------------- | ------------------------------------ | ------------------ |
-| requestId         | String                        | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id             |
-| version           | Int                           | 20190828                             | 当前分类版本号     |
-| RoomItemsCodeList | List&lt;RoomItemsCodeType&gt; |                                      | 客用品分类代码列表 |
+| 名称              | 类型                              | 示例值                               | 描述               |
+| ----------------- | --------------------------------- | ------------------------------------ | ------------------ |
+| requestId         | String                            | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id             |
+| version           | Int                               | 20190828                             | 当前分类版本号     |
+| guestSuppliesList | List&lt;GuestSuppliesListType&gt; |                                      | 客用品分类代码列表 |
 
-#### RoomItemsCodeType参数说明
+#### GuestSuppliesListType参数说明
 | 名称       | 类型   | 示例值 | 描述                               |
 | ---------- | ------ | ------ | ---------------------------------- |
 | code       | Int    | 10001  | 客需品对应类别id                   |
@@ -393,14 +393,14 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatur
 
 #### 示例
 请求参数
-https://open-api.yunjiai.cn/v1/goods/queryRoomItemsCode?signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
 
 正常返回示例
 ```json
 {
     "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
     "version": 20190828,
-    "RoomItemsCodeList": [
+    "guestSuppliesList": [
         {
             "code":10001,
             "categoryId":1,
@@ -424,14 +424,14 @@ https://open-api.yunjiai.cn/v1/goods/queryRoomItemsCode?signatureNonce=349sjf2j3
 
 根据客用品代码获取对应门店下分类商品列表，注意：支持分页，每页最多返回100条,默认值为20,页码从1开始，默认为第一页。
 
->GET /v1/goods/queryByRoomItemsCode
+>GET /v1/goods/queryByGuestSuppliesCode
 
 #### 请求参数
-| 名称          | 类型 | 是否必选 | 示例值 | 描述              |
-| ------------- | ---- | -------- | ------ | ----------------- |
-| roomItemsCode | Int  | 是       | 10001  | 客用品分类代码    |
-| pageSize      | Int  | 否       | 20     | 条数，默认值20    |
-| current       | Int  | 否       | 1      | 当前页数，默认值1 |
+| 名称              | 类型 | 是否必选 | 示例值 | 描述              |
+| ----------------- | ---- | -------- | ------ | ----------------- |
+| guestSuppliesCode | Int  | 是       | 10001  | 客用品分类代码    |
+| pageSize          | Int  | 否       | 20     | 条数，默认值20    |
+| current           | Int  | 否       | 1      | 当前页数，默认值1 |
 
 #### 返回参数
 | 名称        | 类型            | 示例值                               | 描述         |
@@ -460,7 +460,7 @@ https://open-api.yunjiai.cn/v1/goods/queryRoomItemsCode?signatureNonce=349sjf2j3
 #### 示例
 请求参数
 
-https://open-api.yunjiai.cn/v1/goods/queryByRoomItemsCode?roomItemsCode=10001&current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+https://open-api.yunjiai.cn/v1/goods/queryByGuestSuppliesCode?guestSuppliesCode=10001&current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
 
 正常返回示例
 ```json
@@ -485,9 +485,13 @@ https://open-api.yunjiai.cn/v1/goods/queryByRoomItemsCode?roomItemsCode=10001&cu
 ```
 
 ## 用户
+
 ### 创建用户标识
+
 客户可根据自己所拥有的唯一标识(房间号，设备号)生成在平台生成唯一用户标识，如有填写手机号或用户名等需求，可对应输入相应字段进行注册
+
 > POST /v1/user/createUser
+> 
 #### 请求参数
 | 名称        | 类型   | 是否必选 | 示例值          | 描述                                                                 |
 | ----------- | ------ | -------- | --------------- | -------------------------------------------------------------------- |
@@ -516,3 +520,16 @@ https://open-api.yunjiai.cn/v1/goods/queryByRoomItemsCode?roomItemsCode=10001&cu
     "uidKey": "5a38d03a60b6286d9c544f58",
 }
 ```
+## 错误码
+| 状态码 | 错误码          | 错误说明               |
+| ------ | --------------- | ---------------------- |
+| 10400  | RemoteError     | 系统参数缺失           |
+| 10501  | RemoteError     | 调用接口失败           |
+| 10502  | TimestampExpire | 请求时间戳已经过期     |
+| 10503  | TimestampExpire | 计算签名错误           |
+| 11001  | TimestampExpire | 商品已下架             |
+| 11002  | TimestampExpire | 商品不在销售时间段售卖 |
+| 11003  | TimestampExpire | 商品库存不足           |
+| 11004  | TimestampExpire | 超出商品限购次数       |
+| 12001  | TimestampExpire | 订单房间号缺失         |
+| 12002  | TimestampExpire | 订单联系人信息缺失     |
