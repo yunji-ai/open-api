@@ -348,7 +348,7 @@ https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNo
 #### 示例
 请求参数
 
-https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+`https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced`
 
 正常返回示例
 ```json
@@ -393,7 +393,8 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatur
 
 #### 示例
 请求参数
-https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+
+`https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced`
 
 正常返回示例
 ```json
@@ -460,7 +461,7 @@ https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?signatureNonce=349sjf2j33
 #### 示例
 请求参数
 
-https://open-api.yunjiai.cn/v1/goods/queryByGuestSuppliesCode?guestSuppliesCode=10001&current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+`https://open-api.yunjiai.cn/v1/goods/queryByGuestSuppliesCode?guestSuppliesCode=10001&current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced`
 
 正常返回示例
 ```json
