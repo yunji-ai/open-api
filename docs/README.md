@@ -194,7 +194,7 @@
 | createDate     | String                        | 2019-10-01T12:00:18Z | 订单创建时间                     |
 | orderStatus    | Int                           | 0                    | 订单若无退订，订单最终状态为成交 |
 | orderItemInfos | List&lt;OrderItemInfoType&gt; |                      | 订单项信息                       |
-| orderTaskInfos | List&lt;orderTaskInfoType&gt; |                      | 订单任务信息                     |
+| orderTaskInfos | List&lt;OrderTaskInfoType&gt; |                      | 订单任务信息                     |
 | orderBasicInfo | OrderBasicInfoType            |                      | 订单基本信息                     |
 | extendProperty | ExtendPropertyType            |                      | 订单扩展信息                     |
 
@@ -210,7 +210,7 @@
 | quantity    | Int     | 2                                                   | 数量                                |
 | unitPrice   | Decimal | 1.50                                                | 单价                                |
 
-#### orderTaskInfoType参数说明
+#### OrderTaskInfoType参数说明
 | 名称          | 类型                   | 示例值                   | 描述                                                                   |
 | ------------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
 | orderTaskId   | String                 | 5a38d03a60b6286d9c544f58 | 订单子任务Id                                                           |
@@ -421,7 +421,7 @@ https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNo
 }
 ```
 
-#### 根据客用品代码获取对应分类商品列表
+### 根据客用品代码获取对应分类商品列表
 
 根据客用品代码获取对应门店下分类商品列表，注意：支持分页，每页最多返回100条,默认值为20,页码从1开始，默认为第一页。
 
