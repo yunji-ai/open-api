@@ -7,6 +7,7 @@
 #### 接入地址
 
 开放接口服务的接入地址为：`https://open-api.yunjiai.cn`
+测试环境接口服务的接入地址为：`https://dev-open-api.yunjiai.cn`
 
 #### 通信协议
 
@@ -535,15 +536,18 @@ guestSuppliesCode=10001<br/>
 }
 ```
 ## 错误码
-| 状态码 | 错误码          | 错误说明               |
-| ------ | --------------- | ---------------------- |
-| 10400  | RemoteError     | 系统参数缺失           |
-| 10501  | RemoteError     | 调用接口失败           |
-| 10502  | TimestampExpire | 请求时间戳已经过期     |
-| 10503  | TimestampExpire | 计算签名错误           |
-| 11001  | TimestampExpire | 商品已下架             |
-| 11002  | TimestampExpire | 商品不在销售时间段售卖 |
-| 11003  | TimestampExpire | 商品库存不足           |
-| 11004  | TimestampExpire | 超出商品限购次数       |
-| 12001  | TimestampExpire | 订单房间号缺失         |
-| 12002  | TimestampExpire | 订单联系人信息缺失     |
+| 状态码 | 错误码                   | 错误说明                     |
+| ------ | ------------------------ | ---------------------------- |
+| 10400  | SystemParametersIndeed   | 系统参数缺失                 |
+| 10501  | RemoteError              | 调用接口失败                 |
+| 10502  | TimestampExpire          | 请求时间戳已经过期           |
+| 10503  | CalculatedSignatureError | 计算签名错误                 |
+| 11001  | GoodsOverdue             | 商品已下架                   |
+| 11002  | OffSalePeriod            | 商品不在销售时间段售卖       |
+| 11003  | InsufficientInventory    | 商品库存不足                 |
+| 11004  | ExceededPurchaseLimit    | 超出商品限购次数             |
+| 11005  | ProductDoesNotExist      | 商品不存在                   |
+| 12001  | MissingOrderParameters   | 订单房间号缺失               |
+| 12002  | MissingOrderParameters   | 订单联系人信息缺失           |
+| 12003  | OrderParameterError      | 订单金额小于门店起送金额     |
+| 12004  | OrderParameterError      | 订单金额小于商品分类起送金额 |
