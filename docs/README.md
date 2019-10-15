@@ -54,36 +54,29 @@
 - 按照Base64编码规则将HMAC值编码成字符串，得到签名值。
 - 将签名值作为`signature`添加到请求参数中。
 #### 执行示例
-以CreateUser为例，假设传送的参数如下：
+以创建用户uid为例，假设传送的参数如下：
 ```json
 {
-
+    "uidKey":"0802",
     "signatureNonce": "53c593e7-766d-4646-8b58-0b795ded0ed6",
     "accessKeyId": "testid",
-    "timestamp": "2019-10-10T08:26:01Z",
-    "pageSize": 20,
-    "current": 1
+    "timestamp": "2019-10-10T08:26:01Z"
 }
 ```
 - 对参数按照key=value的格式，并按照参数名ASCII字典序排序如下：
-    "accessKeyId=testid&current=1&pageSize=20&signatureNonce=53c593e7-766d-4646-8b58-0b795ded0ed6&timestamp=2019-10-10T08:26:01Z"
+    `accessKeyId=testid&signatureNonce=53c593e7-766d-4646-8b58-0b795ded0ed6&timestamp=2019-10-10T08:26:01Z&uidKey=0802`
 
-
-对应的规范化请求字符串为：
-`1926466a30c065e800d8b1e53cd5b457e8694de2`
-
-假设accessKeyId为testId，accessKeySecret为:testsecret,则用于计算的HMAC的key为：testsecret&。
-计算得到的签名值为：`kRA2cnpJVacIhDMzXnoNZG9tDCI`
+假设accessKeyId为`testId`，accessKeySecret为`testsecret`,则用于计算的HMAC的key为：`testsecret`。
+计算得到的签名值为：`LTg1OTM3OTgyMTAwNTI4NTU4NzM=`
 
 最终得到的发送数据为：
 ```json
 {
-    "signature": "1926466a30c065e800d8b1e53cd5b457e8694de2",
+    "uidKey":"0802",
+    "signature": "LTg1OTM3OTgyMTAwNTI4NTU4NzM=",
     "signatureNonce": "53c593e7-766d-4646-8b58-0b795ded0ed6",
     "accessKeyId": "testId",
     "timestamp": "2019-10-10T08:26:01Z",
-    "pageSize": 20,
-    "current": 1
 }
 ```
 
@@ -266,8 +259,12 @@
 #### 示例
 请求参数
 
-https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced
-
+https://open-api.yunjiai.cn/v1/order/queryByOrderSN?<br/>
+orderSN=32938472<br/>
+&signatureNonce=349sjf2j334j<br/>
+&timestamp=1243324234<br/>
+&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
 
 正常返回示例
 ```json
@@ -348,7 +345,12 @@ https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNo
 #### 示例
 请求参数
 
-`https://open-api.yunjiai.cn/v1/goods/queryByStore?current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced`
+https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
+&pageSize=20<br />
+&signatureNonce=349sjf2j334j<br />
+&timestamp=1243324234<br />
+&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br />
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced
 
 正常返回示例
 ```json
@@ -394,7 +396,11 @@ https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNo
 #### 示例
 请求参数
 
-`https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced`
+https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?<br/>
+signatureNonce=349sjf2j334j<br/>
+&timestamp=1243324234<br/>
+&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced
 
 正常返回示例
 ```json
@@ -461,7 +467,14 @@ https://open-api.yunjiai.cn/v1/order/queryByOrderSN?orderSN=32938472&signatureNo
 #### 示例
 请求参数
 
-`https://open-api.yunjiai.cn/v1/goods/queryByGuestSuppliesCode?guestSuppliesCode=10001&current=1&pageSize=20&signatureNonce=349sjf2j334j&timestamp=1243324234&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61&accessKeyId=c0a55b403ac0f7ac9e63c93ced`
+https://open-api.yunjiai.cn/v1/goods/queryByGuestSuppliesCode?<br/>
+guestSuppliesCode=10001<br/>
+&current=1<br/>
+&pageSize=20<br/>
+&signatureNonce=349sjf2j334j<br/>
+&timestamp=1243324234<br/>
+&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
 
 正常返回示例
 ```json
