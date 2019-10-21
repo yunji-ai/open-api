@@ -532,7 +532,7 @@ guestSuppliesCode=10001<br/>
 ```json
 {
     "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
-    "uidKey": "5a38d03a60b6286d9c544f58",
+    "userId": "5a38d03a60b6286d9c544f58",
 }
 ```
 ## 错误码
