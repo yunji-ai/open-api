@@ -113,6 +113,7 @@
 | userId        | String                        | 是       | 5a38d03a60b6286d9c544f58 | 用户唯一标识，可通过创建用户接口创建 |
 | orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |                          | 订单信息                             |
 | thirdPayType  | Int                           | 是       | 3                        | 3：预付                              |
+| amount        | Decimal                       | 是       | 12.0                     | 订单实际支付总金额                   |
 | contactInfo   | ContactInfoType               | 是       |                          | 订单联系人信息                       |
 
 #### OrderFormInfoType参数说明
