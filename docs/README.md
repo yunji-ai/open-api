@@ -111,6 +111,7 @@
 | 名称          | 类型                          | 是否必选 | 示例值                   | 描述                                 |
 | ------------- | ----------------------------- | -------- | ------------------------ | ------------------------------------ |
 | userId        | String                        | 是       | 5a38d03a60b6286d9c544f58 | 用户唯一标识，可通过创建用户接口创建 |
+| storeId       | String                        | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配               |
 | orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |                          | 订单信息                             |
 | thirdPayType  | Int                           | 是       | 3                        | 3：预付                              |
 | amount        | Decimal                       | 是       | 12.0                     | 订单实际支付总金额                   |
@@ -145,6 +146,9 @@
 请求示例
 ```json
 {
+    "userId": "5a38d03a60b6286d9c544f58",
+    "storeId": "5a38d03a60b6286d9c544f58",
+    "amount": 12.0,
     "orderFormInfo": [
         {
             "productId": "5a38d03a60b6286d9c544f58",
@@ -318,10 +322,11 @@ orderSN=32938472<br/>
 > GET /v1/goods/queryByStore
 
 #### 请求参数
-| 名称     | 类型 | 是否必选 | 示例值 | 描述     |
-| -------- | ---- | -------- | ------ | -------- |
-| pageSize | Int  | 否       | 20     | 条数     |
-| current  | Int  | 否       | 1      | 当前页数 |
+| 名称     | 类型   | 是否必选 | 示例值                   | 描述                   |
+| -------- | ------ | -------- | ------------------------ | ---------------------- |
+| storeId  | String | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配 |
+| pageSize | Int    | 否       | 20                       | 条数                   |
+| current  | Int    | 否       | 1                        | 当前页数               |
 
 #### 返回参数
 | 名称        | 类型            | 示例值                               | 描述         |
@@ -355,7 +360,8 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
 &signatureNonce=349sjf2j334j<br />
 &timestamp=1243324234<br />
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br />
-&accessKeyId=c0a55b403ac0f7ac9e63c93ced
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced<br />
+&storeId=5a38d03a60b6286d9c544f58
 
 正常返回示例
 ```json
@@ -439,11 +445,12 @@ signatureNonce=349sjf2j334j<br/>
 >GET /v1/goods/queryByGuestSuppliesCode
 
 #### 请求参数
-| 名称              | 类型 | 是否必选 | 示例值 | 描述              |
-| ----------------- | ---- | -------- | ------ | ----------------- |
-| guestSuppliesCode | Int  | 是       | 10001  | 客用品分类代码    |
-| pageSize          | Int  | 否       | 20     | 条数，默认值20    |
-| current           | Int  | 否       | 1      | 当前页数，默认值1 |
+| 名称              | 类型   | 是否必选 | 示例值                   | 描述                   |
+| ----------------- | ------ | -------- | ------------------------ | ---------------------- |
+| storeId           | String | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配 |
+| guestSuppliesCode | Int    | 是       | 10001                    | 客用品分类代码         |
+| pageSize          | Int    | 否       | 20                       | 条数，默认值20         |
+| current           | Int    | 否       | 1                        | 当前页数，默认值1      |
 
 #### 返回参数
 | 名称        | 类型            | 示例值                               | 描述         |
@@ -480,6 +487,7 @@ guestSuppliesCode=10001<br/>
 &timestamp=1243324234<br/>
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
+&storeId=5a38d03a60b6286d9c544f58<br/>
 
 正常返回示例
 ```json
