@@ -585,12 +585,14 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
 | groupProductList | GroupProductItemType |                                      | 产品列表详情 |
 
 #### GroupProductItemType参数说明
-| 名称        | 类型                        | 示例值                   | 描述           |
-| ----------- | --------------------------- | ------------------------ | -------------- |
-| groupName   | String                      | 矿泉水                   | 商品分组名称   |
-| groupId     | String                      | 5a38d03a60b6286d9c544f58 | 商品分组id     |
-| sort        | Int                         | 1                        | 商品分组排序   |
-| productList | List&lt;ProductItemType&gt; |                          | 分组下商品详情 |
+| 名称               | 类型                        | 示例值                                         | 描述                                                         |
+| ------------------ | --------------------------- | ---------------------------------------------- | ------------------------------------------------------------ |
+| groupName          | String                      | 矿泉水                                         | 商品分组名称                                                 |
+| groupId            | String                      | 5a38d03a60b6286d9c544f58                       | 商品分组id                                                   |
+| groupImageUrl      | String                      | http://images.sp.yunjichina.com.cn/goods/s.png | 如果商品分组下拥有分组图标，则返回该图标url,未设置则返回为空 |
+| lowestSellingPrice | Int                         | 0                                              | 该分组下最低销售价格，默认为0，单位为分                      |
+| sort               | Int                         | 1                                              | 商品分组排序权重值                                           |
+| productList        | List&lt;ProductItemType&gt; |                                                | 分组下商品详情                                               |
 
 #### ProductItemType参数说明
 | 名称        | 类型    | 示例值                                         | 描述         |
@@ -621,7 +623,9 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?
         {
             "groupName": "饮品",
             "groupId": "5a38d03a60b6286d9c544f58",
-            "sort":1,
+            "groupImageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
+            "lowestSellingPrice": 0,
+            "sort": 1,
             "productList": [
                 {
                     "productName": "矿泉水",
