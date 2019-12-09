@@ -301,12 +301,14 @@ orderSN=32938472<br/>
                 "processStatus": 1,
                 "taskType": 1,
                 "admissionCertificate": 1212,
-                "detail": {
-                    "productId": "5a38d03a60b6286d9c544f58",
-                    "productName": "矿泉水",
-                    "imageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
-                    "quantity": 1
-                }
+                "detail": [
+                    {1
+                      "productId": "5a38d03a60b6286d9c544f58",
+                      "productName": "矿泉水",
+                      "imageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
+                      "quantity": 1
+                    }
+                ]
             }
         ],
         "orderBasicInfos": {
@@ -513,11 +515,11 @@ orderSN=32938472<br/>
 | current  | Int    | 否       | 1                        | 当前页数               |
 
 #### 返回参数
-| 名称        | 类型            | 示例值                               | 描述         |
-| ----------- | --------------- | ------------------------------------ | ------------ |
-| requestId   | String          | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
-| productList | ProductItemType |                                      | 产品列表详情 |
-| pagination  | PaginationType  |                                      | 分页信息     |
+| 名称        | 类型                        | 示例值                               | 描述         |
+| ----------- | --------------------------- | ------------------------------------ | ------------ |
+| requestId   | String                      | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| productList | List&lt;ProductItemType&gt; |                                      | 产品列表详情 |
+| pagination  | PaginationType              |                                      | 分页信息     |
 
 #### ProductItemType参数说明
 | 名称        | 类型    | 示例值                                         | 描述         |
@@ -579,10 +581,10 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
 | storeId | String | 是       | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
 
 #### 返回参数
-| 名称             | 类型                 | 示例值                               | 描述         |
-| ---------------- | -------------------- | ------------------------------------ | ------------ |
-| requestId        | String               | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
-| groupProductList | GroupProductItemType |                                      | 产品列表详情 |
+| 名称             | 类型                             | 示例值                               | 描述         |
+| ---------------- | -------------------------------- | ------------------------------------ | ------------ |
+| requestId        | String                           | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| groupProductList | List&lt;GroupProductItemType&gt; |                                      | 产品列表详情 |
 
 #### GroupProductItemType参数说明
 | 名称               | 类型                        | 示例值                                         | 描述                                                         |
@@ -709,11 +711,11 @@ signatureNonce=349sjf2j334j<br/>
 | current           | Int    | 否       | 1                        | 当前页数，默认值1      |
 
 #### 返回参数
-| 名称        | 类型            | 示例值                               | 描述         |
-| ----------- | --------------- | ------------------------------------ | ------------ |
-| requestId   | String          | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
-| productList | ProductItemType |                                      | 产品列表详情 |
-| pagination  | PaginationType  |                                      | 分页信息     |
+| 名称        | 类型                        | 示例值                               | 描述         |
+| ----------- | --------------------------- | ------------------------------------ | ------------ |
+| requestId   | String                      | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| productList | List&lt;ProductItemType&gt; |                                      | 产品列表详情 |
+| pagination  | PaginationType              |                                      | 分页信息     |
 
 #### ProductItemType参数说明
 | 名称        | 类型    | 示例值                                         | 描述         |
