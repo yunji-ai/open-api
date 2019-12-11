@@ -15,7 +15,7 @@
 
 #### HTTP请求方法
 
-接口支持HTTP POST方法发送请求
+接口支持HTTP POST,GET方法发送请求,其中GET请求URL时，须对URL进行urlencode。
 
 #### 请求参数
 
@@ -51,7 +51,7 @@
   - 对参数按照key=value的格式，并按照参数名ASCII字典序，排序参数包括公共参数和接口自定义参数。不包括公共请求参数中的**signature**参数；
   - 如果参数的值为空不参与签名；
   - 参数名区分大小写；
-- 计算签名HMAC值。注意计算签名时使用的Key就是用户持有的`accessKeySecret`并加上一个“&”字符(ASCII:38),使用的哈希算法是SHA1。
+- 计算签名HMAC值。注意计算签名时使用的Key就是用户持有的`accessKeySecret`并加上一个“&”字符,使用的哈希算法是SHA1。
 - 按照Base64编码规则将HMAC值编码成字符串，得到签名值。
 - 将签名值作为`signature`添加到请求参数中。
 #### 执行示例
@@ -142,6 +142,7 @@
 | orderSN    | Long   | 223445452233         | 订单号   |
 | createDate | String | 2019-10-01T12:00:18Z | 创建时间 |
 
+
 #### 示例
 请求示例
 ```json
@@ -169,7 +170,7 @@
     "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
     "orderInfo": {
         "orderSN": 223445452233,
-        "createDate": "2019-10-01T12:00:18Z"
+        "createDate": "2019-10-01T12:00:18Z",
     }
 }
 ```
@@ -212,12 +213,13 @@
 | unitPrice   | Decimal | 1.50                                                | 单价                                |
 
 #### OrderTaskInfoType参数说明
-| 名称          | 类型                   | 示例值                   | 描述                                                                   |
-| ------------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
-| orderTaskId   | String                 | 5a38d03a60b6286d9c544f58 | 订单子任务Id                                                           |
-| detail        | List&lt;DetailType&gt; |                          | 备注                                                                   |
-| processStatus | Int                    | 1                        | 任务状态                                                               |
-| taskType      | Int                    | 1                        | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
+| 名称                 | 类型                   | 示例值                   | 描述                                                                   |
+| -------------------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| orderTaskId          | String                 | 5a38d03a60b6286d9c544f58 | 订单子任务Id                                                           |
+| detail               | List&lt;DetailType&gt; |                          | 备注                                                                   |
+| processStatus        | Int                    | 1                        | 任务状态                                                               |
+| taskType             | Int                    | 1                        | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
+| admissionCertificate | String                 | 1923                     | 数字凭证或取物码，当商户在后台配置商品需通过取物码取货时，该字段将返回 |
 
 #### DetailType参数说明
 | 名称        | 类型   | 示例值                                              | 描述         |
@@ -298,6 +300,153 @@ orderSN=32938472<br/>
                 "orderTaskId": "5a38d03a60b6286d9c544f58",
                 "processStatus": 1,
                 "taskType": 1,
+                "admissionCertificate": 1212,
+                "detail": [
+                    {1
+                      "productId": "5a38d03a60b6286d9c544f58",
+                      "productName": "矿泉水",
+                      "imageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
+                      "quantity": 1
+                    }
+                ]
+            }
+        ],
+        "orderBasicInfos": {
+            "amount": 5.00,
+        },
+        "extendProperty": {
+            "recipientAddress": "0801",
+        }
+    }
+}
+```
+
+### 根据用户id查询订单详情
+> GET /v1/order/queryByUserId
+
+#### 请求参数
+| 名称   | 类型   | 是否必选 | 示例值                             | 描述         |
+| ------ | ------ | -------- | ---------------------------------- | ------------ |
+| userId | String | 是       | 12740139d33520a68947c6bee3c0692748 | 用户唯一标识 |
+
+#### 返回参数
+| 名称          | 类型                      | 示例值                               | 描述             |
+| ------------- | ------------------------- | ------------------------------------ | ---------------- |
+| requestId     | String                    | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id           |
+| orderInfoList | List&lt;OrderInfoType&gt; |                                      | 查询订单详情集合 |
+#### OrderInfoType参数说明
+| 名称           | 类型                          | 示例值               | 描述                             |
+| -------------- | ----------------------------- | -------------------- | -------------------------------- |
+| orderSN        | Long                          | 1467803671           | 订单唯一标识                     |
+| orderName      | String                        | 矿泉水 * 1           | 订单名称                         |
+| createDate     | String                        | 2019-10-01T12:00:18Z | 订单创建时间                     |
+| orderStatus    | Int                           | 0                    | 订单若无退订，订单最终状态为成交 |
+| orderItemInfos | List&lt;OrderItemInfoType&gt; |                      | 订单项信息                       |
+| orderTaskInfos | List&lt;OrderTaskInfoType&gt; |                      | 订单任务信息                     |
+| orderBasicInfo | OrderBasicInfoType            |                      | 订单基本信息                     |
+| extendProperty | ExtendPropertyType            |                      | 订单扩展信息                     |
+
+
+#### OrderItemInfoType参数说明
+| 名称        | 类型    | 示例值                                              | 描述                                |
+| ----------- | ------- | --------------------------------------------------- | ----------------------------------- |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/757a19.png | 图片地址                            |
+| productId   | String  | 5a38d03a60b6286d9c544f58                            | 商品id                              |
+| productName | String  | 矿泉水                                              | 商品名称                            |
+| productType | Int     | 1                                                   | 商品类型:1-普通商品,2-赠品,3-客需品 |
+| amount      | Decimal | 3.00                                                | 商品总卖价                          |
+| quantity    | Int     | 2                                                   | 数量                                |
+| unitPrice   | Decimal | 1.50                                                | 单价                                |
+
+#### OrderTaskInfoType参数说明
+| 名称                 | 类型                   | 示例值                   | 描述                                                                   |
+| -------------------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| orderTaskId          | String                 | 5a38d03a60b6286d9c544f58 | 订单子任务Id                                                           |
+| detail               | List&lt;DetailType&gt; |                          | 备注                                                                   |
+| processStatus        | Int                    | 1                        | 任务状态                                                               |
+| taskType             | Int                    | 1                        | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
+| admissionCertificate | String                 | 1923                     | 数字凭证或取物码，当商户在后台配置商品需通过取物码取货时，该字段将返回 |
+
+#### DetailType参数说明
+| 名称        | 类型   | 示例值                                              | 描述         |
+| ----------- | ------ | --------------------------------------------------- | ------------ |
+| productId   | String | 5a38d03a60b6286d9c544f58                            | 商品唯一标识 |
+| productName | String | 矿泉水                                              | 商品名称     |
+| imageUrl    | String | http://images.sp.yunjichina.com.cn/goods/757a19.png | 商品缩略图   |
+| quantity    | Int    | 1                                                   | 商品数量     |
+
+#### OrderBasicInfoType参数说明
+| 名称   | 类型    | 示例值 | 描述               |
+| ------ | ------- | ------ | ------------------ |
+| amount | Decimal | 1.50   | 原始下单总价(不变) |
+
+#### ExtendPropertyType参数说明
+| 名称             | 类型   | 示例值      | 描述                               |
+| ---------------- | ------ | ----------- | ---------------------------------- |
+| recipientAddress | String | 0801        | 房间号                             |
+| recipientPhone   | String | 12312341234 | 收货人电话                         |
+| recipientName    | String | 张三        | 若用户没有填写姓名，此字段默认为空 |
+
+#### 订单状态对应关系
+| 值  | 描述   |
+| --- | ------ |
+| 0   | 未付款 |
+| 1   | 待发货 |
+| 2   | 待收货 |
+| 3   | 已收货 |
+| 5   | 已取消 |
+| 6   | 退款中 |
+| 7   | 已退款 |
+| 8   | 已关闭 |
+
+
+#### 任务状态对应关系
+| 值  | 描述       |
+| --- | ---------- |
+| 0   | 排队中     |
+| 1   | 送货中     |
+| 3   | 任务取消   |
+| 4   | 用户未取物 |
+| 5   | 取货中     |
+| 6   | 已取货     |
+| 7   | 任务异常   |
+| 8   | 任务失败   |
+
+#### 示例
+请求参数
+
+https://open-api.yunjiai.cn/v1/order/queryByOrderSN?<br/>
+orderSN=32938472<br/>
+&signatureNonce=349sjf2j334j<br/>
+&timestamp=1243324234<br/>
+&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
+
+正常返回示例
+```json
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "orderInfoList": [{
+        "orderSN": 223445452233,
+        "orderName": "矿泉水 * 1",
+        "createDate": "2019-10-01T12:00:18Z",
+        "orderStatus": 2,
+        "orderItemInfos": [
+            {
+                "imageUrl": "http://images.sp.yunjichina.com.cn/goods/sd23.png",
+                "productId": "5a38d03a60b6286d9c544f58",
+                "productName": "矿泉水",
+                "amount": 5.00,
+                "quantity": 2,
+                "unitPrice": 2.50
+            }
+        ],
+        "orderTaskInfos": [
+            {
+                "orderTaskId": "5a38d03a60b6286d9c544f58",
+                "processStatus": 1,
+                "taskType": 1,
+                "admissionCertificate": 1212,
                 "detail": {
                     "productId": "5a38d03a60b6286d9c544f58",
                     "productName": "矿泉水",
@@ -312,11 +461,48 @@ orderSN=32938472<br/>
         "extendProperty": {
             "recipientAddress": "0801",
         }
-    }
+    }]
+}
+```
+
+### 取消订单
+如果订单任务处于异常或用户需要进行退款操作，可调用此接口将订单标记为已取消状态。该订单下的所有未配送任务将标记为取消，不再进行配送
+> POST /v1/order/cancel
+
+#### 请求参数
+| 名称    | 类型   | 是否必选 | 示例值         | 描述         |
+| ------- | ------ | -------- | -------------- | ------------ |
+| orderSN | Long   | 是       | 223445452233   | 订单唯一标识 |
+| reason  | String | 是       | 机器人送货失败 | 取消原因     |
+
+#### 返回数据
+| 名称      | 类型   | 示例值                               | 描述                         |
+| --------- | ------ | ------------------------------------ | ---------------------------- |
+| requestId | String | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id                       |
+| errorCode | Int    | 0                                    | 操作处理结果，成功则返回0    |
+| errorMsg  | String | SUCCESS                              | 操作信息，错误讲返回错误信息 |
+
+#### 示例
+请求示例
+```json
+{
+    "orderSN": 223445452233,
+    "reason": "5a38d03a60b6286d9c544f58",
+    /* 公共请求参数 */
+}
+```
+
+正常返回示例
+```json
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "errorCode": 0,
+    "errorMsg": "SUCCESS",
 }
 ```
 
 ## 商品
+
 ### 获取全部商品列表
 获取产品列表，注意：支持分页，每页最多返回100条,默认值为20,页码从1开始，默认为第一页
 > GET /v1/goods/queryByStore
@@ -329,11 +515,11 @@ orderSN=32938472<br/>
 | current  | Int    | 否       | 1                        | 当前页数               |
 
 #### 返回参数
-| 名称        | 类型            | 示例值                               | 描述         |
-| ----------- | --------------- | ------------------------------------ | ------------ |
-| requestId   | String          | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
-| productList | ProductItemType |                                      | 产品列表详情 |
-| pagination  | PaginationType  |                                      | 分页信息     |
+| 名称        | 类型                        | 示例值                               | 描述         |
+| ----------- | --------------------------- | ------------------------------------ | ------------ |
+| requestId   | String                      | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| productList | List&lt;ProductItemType&gt; |                                      | 产品列表详情 |
+| pagination  | PaginationType              |                                      | 分页信息     |
 
 #### ProductItemType参数说明
 | 名称        | 类型    | 示例值                                         | 描述         |
@@ -382,6 +568,78 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
         "pageSize": 20,
         "total": 99
     }
+}
+```
+
+### 获取全部分组商品
+获取门店所有分组下的分组详情和分组下所包含的商品详情列表
+> GET /v1/goods/group/list
+
+#### 请求参数
+| 名称    | 类型   | 是否必选 | 示例值                   | 描述                   |
+| ------- | ------ | -------- | ------------------------ | ---------------------- |
+| storeId | String | 是       | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
+
+#### 返回参数
+| 名称             | 类型                             | 示例值                               | 描述         |
+| ---------------- | -------------------------------- | ------------------------------------ | ------------ |
+| requestId        | String                           | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| groupProductList | List&lt;GroupProductItemType&gt; |                                      | 产品列表详情 |
+
+#### GroupProductItemType参数说明
+| 名称               | 类型                        | 示例值                                         | 描述                                                         |
+| ------------------ | --------------------------- | ---------------------------------------------- | ------------------------------------------------------------ |
+| groupName          | String                      | 矿泉水                                         | 商品分组名称                                                 |
+| groupId            | String                      | 5a38d03a60b6286d9c544f58                       | 商品分组id                                                   |
+| groupImageUrl      | String                      | http://images.sp.yunjichina.com.cn/goods/s.png | 如果商品分组下拥有分组图标，则返回该图标url,未设置则返回为空 |
+| lowestSellingPrice | Int                         | 0                                              | 该分组下最低销售价格，默认为0，单位为分                      |
+| sort               | Int                         | 1                                              | 商品分组排序权重值                                           |
+| productList        | List&lt;ProductItemType&gt; |                                                | 分组下商品详情                                               |
+
+#### ProductItemType参数说明
+| 名称        | 类型    | 示例值                                         | 描述         |
+| ----------- | ------- | ---------------------------------------------- | ------------ |
+| productName | String  | 矿泉水                                         | 商品名称     |
+| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
+| unitPrice   | Decimal | 11.20                                          | 商品单价     |
+| actualPrice | Decimal | 11.20                                          | 实际售价     |
+| storage     | Int     | 999                                            | 商品库存     |
+
+
+#### 示例
+请求参数
+
+https://open-api.yunjiai.cn/v1/goods/queryByStore?
+&signatureNonce=349sjf2j334j<br />
+&timestamp=1243324234<br />
+&sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br />
+&accessKeyId=c0a55b403ac0f7ac9e63c93ced<br />
+&storeId=5a38d03a60b6286d9c544f58
+
+正常返回示例
+```json
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "groupProductList": [
+        {
+            "groupName": "饮品",
+            "groupId": "5a38d03a60b6286d9c544f58",
+            "groupImageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
+            "lowestSellingPrice": 0,
+            "sort": 1,
+            "productList": [
+                {
+                    "productName": "矿泉水",
+                    "productId": "5a38d03a60b6286d9c544f58",
+                    "imageUrl"::"http://images.sp.yunjichina.com.cn/goods/s.png",
+                    "unitPrice": 1.50,
+                    "actualPrice": 1.50,
+                    "storage": 23
+                }
+            ],
+        }
+    ],
 }
 ```
 
@@ -453,11 +711,11 @@ signatureNonce=349sjf2j334j<br/>
 | current           | Int    | 否       | 1                        | 当前页数，默认值1      |
 
 #### 返回参数
-| 名称        | 类型            | 示例值                               | 描述         |
-| ----------- | --------------- | ------------------------------------ | ------------ |
-| requestId   | String          | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
-| productList | ProductItemType |                                      | 产品列表详情 |
-| pagination  | PaginationType  |                                      | 分页信息     |
+| 名称        | 类型                        | 示例值                               | 描述         |
+| ----------- | --------------------------- | ------------------------------------ | ------------ |
+| requestId   | String                      | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| productList | List&lt;ProductItemType&gt; |                                      | 产品列表详情 |
+| pagination  | PaginationType              |                                      | 分页信息     |
 
 #### ProductItemType参数说明
 | 名称        | 类型    | 示例值                                         | 描述         |
@@ -549,6 +807,57 @@ guestSuppliesCode=10001<br/>
     "userId": "5a38d03a60b6286d9c544f58",
 }
 ```
+
+## 消息推送
+回调接口统一使用http post或https post方式，但我们十分建议您同时将其配置为https地址，未来会择期要求全部开发者升级到https方式，contentType 为“application/x-www-form-urlencoded”，端口号仅支持80或8080
+
+### 任务异常处理
+当服务生系统执行任务时发生了失败或异常时，如在后台管理系统配置了该消息的回调接口，将推送该消息。
+
+#### 推送参数
+| 名称       | 类型   | 示例值                   | 描述                                                                 |
+| ---------- | ------ | ------------------------ | -------------------------------------------------------------------- |
+| storeId    | String | 5a38d03a60b6286d9c544f58 | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| orderSN    | Long   | 223445452233             | 订单唯一标识                                                         |
+| taskId     | String | 5a38d03a60b6286d9c544f58 | 失败任务id                                                           |
+| errorCode  | Int    | 1290                     | 失败错误码                                                           |
+| errorMsg   | String | 出货失败                 | 失败错误信息                                                         |
+| createTime | Long   | 1575629914274            | 推送时间戳，格式为UTC                                                |
+
+#### 推送示例
+```json
+{
+    "storeId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "orderSN": 223445452233,
+    "taskId": "5a38d03a60b6286d9c544f58",
+    "errorCode": 10086,
+    "errorMsg": "出货失败",
+    "createTime":1575629914274
+}
+```
+
+### 到达目的地回调通知
+当任务为机器人派送时，如果在后台管理系统配置了该消息的回调接口，将推送该消息
+
+#### 推送参数
+| 名称       | 类型   | 示例值                   | 描述                                                                 |
+| ---------- | ------ | ------------------------ | -------------------------------------------------------------------- |
+| storeId    | String | 5a38d03a60b6286d9c544f58 | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| orderSN    | Long   | 223445452233             | 订单唯一标识                                                         |
+| taskId     | String | 5a38d03a60b6286d9c544f58 | 失败任务id                                                           |
+| createTime | Long   | 1575629914274            | 推送时间戳，格式为UTC                                                |
+
+#### 推送示例
+```json
+{
+    "storeId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "orderSN": 223445452233,
+    "taskId": "5a38d03a60b6286d9c544f58",
+    "createTime":1575629914274
+}
+```
+
+
 ## 错误码
 | 状态码 | 错误码                   | 错误说明                     |
 | ------ | ------------------------ | ---------------------------- |
