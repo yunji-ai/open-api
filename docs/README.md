@@ -496,8 +496,8 @@ orderSN=32938472<br/>
 ```json
 {
     "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
-    "errorCode": 0,
-    "errorMsg": "SUCCESS",
+    "code": 0,
+    "message": "SUCCESS",
 }
 ```
 
