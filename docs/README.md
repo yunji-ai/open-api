@@ -808,6 +808,46 @@ guestSuppliesCode=10001<br/>
 }
 ```
 
+## 地点
+## 根据送货类型返回门店下所有点位
+> GET /v1/position/query
+
+#### 请求参数
+| 名称 | 类型 | 是否必选 | 示例值 | 描述            |
+| ---- | ---- | -------- | ------ | --------------- |
+| type | Int  | 是       | 1      | 任务类型 1-送物 |
+
+#### 返回参数
+| 名称      | 类型                         | 示例值                               | 描述         |
+| --------- | ---------------------------- | ------------------------------------ | ------------ |
+| requestId | String                       | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id       |
+| positions | List&lt;PositionItemType&gt; |                                      | 点位列表详情 |
+
+
+#### PositionItemType参数说明
+| 名称 | 类型   | 示例值                   | 描述                               |
+| ---- | ------ | ------------------------ | ---------------------------------- |
+| name | String | 8291                     | 点位名称，唯一标识                 |
+| type | String | 5a38d03a60b6286d9c544f58 | 点位类型，0-正常，1-充电桩，2-电梯 |
+
+#### 示例
+请求参数
+
+https://open-api.yunjiai.cn/v1/position/query?type=1
+
+正常返回示例
+```json
+{
+    "requestId": "0139d33c-5204-4a6a-8830-9947c6bee3c0",
+    "positions": [
+        {
+            "name": "8291",
+            "type": "0",
+        }
+    ]
+}
+```
+
 ## 消息推送
 回调接口统一使用http post或https post方式，但我们十分建议您同时将其配置为https地址，未来会择期要求全部开发者升级到https方式，contentType 为“application/x-www-form-urlencoded”，端口号仅支持80或8080
 
