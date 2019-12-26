@@ -67,7 +67,7 @@
 - 对参数按照key=value的格式，并按照参数名ASCII字典序排序如下：
     `accessKeyId=testid&signatureNonce=53c593e7-766d-4646-8b58-0b795ded0ed6&timestamp=2019-10-10T08:26:01Z&uidKey=0802`
 
-假设accessKeyId为`testId`，accessKeySecret为`testsecret`,则用于计算的HMAC的key为：`testsecret`。
+假设accessKeyId为`testId`，accessKeySecret为`testsecret`,则用于计算的HMAC的key为：`testsecret&`。
 计算得到的签名值为：`VQAdXELyv7rl/6E4bj1VdV4X6vI=`
 
 最终得到的发送数据为：
