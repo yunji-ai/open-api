@@ -68,18 +68,29 @@
     `accessKeyId=testid&signatureNonce=53c593e7-766d-4646-8b58-0b795ded0ed6&timestamp=2019-10-10T08:26:01Z&uidKey=0802`
 
 假设accessKeyId为`testId`，accessKeySecret为`testsecret`,则用于计算的HMAC的key为：`testsecret`。
-计算得到的签名值为：`LTg1OTM3OTgyMTAwNTI4NTU4NzM=`
+计算得到的签名值为：`VQAdXELyv7rl/6E4bj1VdV4X6vI=`
 
 最终得到的发送数据为：
 ```json
 {
     "uidKey":"0802",
-    "signature": "LTg1OTM3OTgyMTAwNTI4NTU4NzM=",
+    "signature": "VQAdXELyv7rl/6E4bj1VdV4X6vI=",
     "signatureNonce": "53c593e7-766d-4646-8b58-0b795ded0ed6",
     "accessKeyId": "testId",
     "timestamp": "2019-10-10T08:26:01Z",
 }
 ```
+相关语言生成验签示例：
+
+| 实现语言   | 文件                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------ |
+| Java       | [JavaSign.java](https://github.com/yunji-ai/open-api/examples/JavaSign.java)         |
+| PHP        | [PHPSign.php](https://github.com/yunji-ai/open-api/examples/PHPSIgn.php)             |
+| .Net       | [.NetSign.cs](https://github.com/yunji-ai/open-api/examples/.NetSign.cs)             |
+| JavaScript | [JavaScriptSign.js](https://github.com/yunji-ai/open-api/examples/JavaScriptSign.js) |
+| Python     | [pythonSign.py](https://github.com/yunji-ai/open-api/examples/pythonSign.py)         |
+| C          | [CSign.c](https://github.com/yunji-ai/open-api/examples/CSign.c)                     |
+| C++        | [C++Sign.cc](https://github.com/yunji-ai/open-api/examples/C++Sign.cc)               |
 
 ### 返回结果
 #### 成功结果
@@ -527,8 +538,8 @@ orderSN=32938472<br/>
 | productName | String  | 矿泉水                                         | 商品名称           |
 | productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识       |
 | imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片           |
-| unitPrice   | Decimal | 11.20                                          | 商品单价，单位为分 |
-| actualPrice | Decimal | 11.20                                          | 实际售价，单位为分 |
+| unitPrice   | Decimal | 1120                                          | 商品单价，单位为分 |
+| actualPrice | Decimal | 1120                                          | 实际售价，单位为分 |
 | storage     | Int     | 999                                            | 商品库存           |
 
 #### PaginationType参数说明
