@@ -82,15 +82,16 @@
 ```
 相关语言生成验签示例：
 
-| 实现语言   | 文件                                                                                 |
-| ---------- | ------------------------------------------------------------------------------------ |
-| Java       | [JavaSign.java](https://github.com/yunji-ai/open-api/examples/JavaSign.java)         |
-| PHP        | [PHPSign.php](https://github.com/yunji-ai/open-api/examples/PHPSIgn.php)             |
-| .Net       | [.NetSign.cs](https://github.com/yunji-ai/open-api/examples/.NetSign.cs)             |
-| JavaScript | [JavaScriptSign.js](https://github.com/yunji-ai/open-api/examples/JavaScriptSign.js) |
-| Python     | [pythonSign.py](https://github.com/yunji-ai/open-api/examples/pythonSign.py)         |
-| C          | [CSign.c](https://github.com/yunji-ai/open-api/examples/CSign.c)                     |
-| C++        | [C++Sign.cc](https://github.com/yunji-ai/open-api/examples/C++Sign.cc)               |
+| 实现语言   | 文件                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| Java       | [JavaSign.java](https://github.com/yunji-ai/open-api/blob/master/examples/JavaSign.java)         |
+| PHP        | [PHPSign.php](https://github.com/yunji-ai/open-api/examples/PHPSIgn.php)                         |
+| .Net       | [.NetSign.cs](https://github.com/yunji-ai/open-api/examples/.NetSign.cs)                         |
+| JavaScript | [JavaScriptSign.js](https://github.com/yunji-ai/open-api/blob/master/examples/JavaScriptSign.js) |
+| Python     | [pythonSign.py](https://github.com/yunji-ai/open-api/blob/master/examples/pythonSign.py)         |
+| C          | [CSign.c](https://github.com/yunji-ai/open-api/examples/CSign.c)                                 |
+| C++        | [C++Sign.cc](https://github.com/yunji-ai/open-api/examples/C++Sign.cc)                           |
+| Go         | [goSign.go](https://github.com/yunji-ai/open-api/examples/goSign.go)                           |
 
 ### 返回结果
 #### 成功结果
@@ -538,8 +539,8 @@ orderSN=32938472<br/>
 | productName | String  | 矿泉水                                         | 商品名称           |
 | productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识       |
 | imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片           |
-| unitPrice   | Decimal | 1120                                          | 商品单价，单位为分 |
-| actualPrice | Decimal | 1120                                          | 实际售价，单位为分 |
+| unitPrice   | Decimal | 1120                                           | 商品单价，单位为分 |
+| actualPrice | Decimal | 1120                                           | 实际售价，单位为分 |
 | storage     | Int     | 999                                            | 商品库存           |
 
 #### PaginationType参数说明
