@@ -67,19 +67,31 @@
 - 对参数按照key=value的格式，并按照参数名ASCII字典序排序如下：
     `accessKeyId=testid&signatureNonce=53c593e7-766d-4646-8b58-0b795ded0ed6&timestamp=2019-10-10T08:26:01Z&uidKey=0802`
 
-假设accessKeyId为`testId`，accessKeySecret为`testsecret`,则用于计算的HMAC的key为：`testsecret`。
-计算得到的签名值为：`LTg1OTM3OTgyMTAwNTI4NTU4NzM=`
+假设accessKeyId为`testId`，accessKeySecret为`testsecret`,则用于计算的HMAC的key为：`testsecret&`。
+计算得到的签名值为：`VQAdXELyv7rl/6E4bj1VdV4X6vI=`
 
 最终得到的发送数据为：
 ```json
 {
     "uidKey":"0802",
-    "signature": "LTg1OTM3OTgyMTAwNTI4NTU4NzM=",
+    "signature": "VQAdXELyv7rl/6E4bj1VdV4X6vI=",
     "signatureNonce": "53c593e7-766d-4646-8b58-0b795ded0ed6",
     "accessKeyId": "testId",
     "timestamp": "2019-10-10T08:26:01Z",
 }
 ```
+相关语言生成验签示例：
+
+| 实现语言   | 文件                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| Java       | [JavaSign.java](https://github.com/yunji-ai/open-api/blob/master/examples/JavaSign.java)         |
+| PHP        | [PHPSign.php](https://github.com/yunji-ai/open-api/examples/PHPSIgn.php)                         |
+| .Net       | [.NetSign.cs](https://github.com/yunji-ai/open-api/examples/.NetSign.cs)                         |
+| JavaScript | [JavaScriptSign.js](https://github.com/yunji-ai/open-api/blob/master/examples/JavaScriptSign.js) |
+| Python     | [pythonSign.py](https://github.com/yunji-ai/open-api/blob/master/examples/pythonSign.py)         |
+| C          | [CSign.c](https://github.com/yunji-ai/open-api/examples/CSign.c)                                 |
+| C++        | [C++Sign.cc](https://github.com/yunji-ai/open-api/examples/C++Sign.cc)                           |
+| Go         | [goSign.go](https://github.com/yunji-ai/open-api/examples/goSign.go)                           |
 
 ### 返回结果
 #### 成功结果
@@ -223,7 +235,7 @@
 | productType | Int     | 1                                                   | 商品类型:1-普通商品,2-赠品,3-客需品 |
 | amount      | Decimal | 3.00                                                | 商品总卖价                          |
 | quantity    | Int     | 2                                                   | 数量                                |
-| unitPrice   | Decimal | 1.50                                                | 单价                                |
+| unitPrice   | Decimal | 150                                                 | 单价，单位为分                      |
 
 #### OrderTaskInfoType参数说明
 | 名称                 | 类型                   | 示例值                   | 描述                                                                   |
@@ -306,7 +318,7 @@ orderSN=32938472<br/>
                 "productName": "矿泉水",
                 "amount": 5.00,
                 "quantity": 2,
-                "unitPrice": 2.50
+                "unitPrice": 250
             }
         ],
         "orderTaskInfos": [
@@ -371,7 +383,7 @@ orderSN=32938472<br/>
 | productType | Int     | 1                                                   | 商品类型:1-普通商品,2-赠品,3-客需品 |
 | amount      | Decimal | 3.00                                                | 商品总卖价                          |
 | quantity    | Int     | 2                                                   | 数量                                |
-| unitPrice   | Decimal | 1.50                                                | 单价                                |
+| unitPrice   | Decimal | 150                                                 | 单价,单位为分                       |
 
 #### OrderTaskInfoType参数说明
 | 名称                 | 类型                   | 示例值                   | 描述                                                                   |
@@ -453,7 +465,7 @@ orderSN=32938472<br/>
                 "productName": "矿泉水",
                 "amount": 5.00,
                 "quantity": 2,
-                "unitPrice": 2.50
+                "unitPrice": 250
             }
         ],
         "orderTaskInfos": [
@@ -537,14 +549,14 @@ orderSN=32938472<br/>
 | pagination  | PaginationType              |                                      | 分页信息     |
 
 #### ProductItemType参数说明
-| 名称        | 类型    | 示例值                                         | 描述         |
-| ----------- | ------- | ---------------------------------------------- | ------------ |
-| productName | String  | 矿泉水                                         | 商品名称     |
-| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
-| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
-| unitPrice   | Decimal | 11.20                                          | 商品单价     |
-| actualPrice | Decimal | 11.20                                          | 实际售价     |
-| storage     | Int     | 999                                            | 商品库存     |
+| 名称        | 类型    | 示例值                                         | 描述               |
+| ----------- | ------- | ---------------------------------------------- | ------------------ |
+| productName | String  | 矿泉水                                         | 商品名称           |
+| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识       |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片           |
+| unitPrice   | Decimal | 1120                                           | 商品单价，单位为分 |
+| actualPrice | Decimal | 1120                                           | 实际售价，单位为分 |
+| storage     | Int     | 999                                            | 商品库存           |
 
 #### PaginationType参数说明
 | 名称     | 类型 | 示例值 | 描述     |
@@ -573,8 +585,8 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
             "productName": "矿泉水",
             "productId": "5a38d03a60b6286d9c544f58",
             "imageUrl"::"http://images.sp.yunjichina.com.cn/goods/s.png",
-            "unitPrice": 1.50,
-            "actualPrice": 1.50,
+            "unitPrice": 150,
+            "actualPrice": 150,
             "storage": 23
         }
     ],
@@ -612,14 +624,14 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
 | productList        | List&lt;ProductItemType&gt; |                                                | 分组下商品详情                                               |
 
 #### ProductItemType参数说明
-| 名称        | 类型    | 示例值                                         | 描述         |
-| ----------- | ------- | ---------------------------------------------- | ------------ |
-| productName | String  | 矿泉水                                         | 商品名称     |
-| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
-| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
-| unitPrice   | Decimal | 11.20                                          | 商品单价     |
-| actualPrice | Decimal | 11.20                                          | 实际售价     |
-| storage     | Int     | 999                                            | 商品库存     |
+| 名称        | 类型    | 示例值                                         | 描述               |
+| ----------- | ------- | ---------------------------------------------- | ------------------ |
+| productName | String  | 矿泉水                                         | 商品名称           |
+| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识       |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片           |
+| unitPrice   | Decimal | 1120                                           | 商品单价，单位为分 |
+| actualPrice | Decimal | 1120                                           | 实际售价，单位为分 |
+| storage     | Int     | 999                                            | 商品库存           |
 
 
 #### 示例
@@ -648,8 +660,8 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?
                     "productName": "矿泉水",
                     "productId": "5a38d03a60b6286d9c544f58",
                     "imageUrl"::"http://images.sp.yunjichina.com.cn/goods/s.png",
-                    "unitPrice": 1.50,
-                    "actualPrice": 1.50,
+                    "unitPrice": 150,
+                    "actualPrice": 150,
                     "storage": 23
                 }
             ],
@@ -733,14 +745,14 @@ signatureNonce=349sjf2j334j<br/>
 | pagination  | PaginationType              |                                      | 分页信息     |
 
 #### ProductItemType参数说明
-| 名称        | 类型    | 示例值                                         | 描述         |
-| ----------- | ------- | ---------------------------------------------- | ------------ |
-| productName | String  | 矿泉水                                         | 商品名称     |
-| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识 |
-| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片     |
-| unitPrice   | Decimal | 11.20                                          | 商品单价     |
-| actualPrice | Decimal | 11.20                                          | 实际售价     |
-| storage     | Int     | 999                                            | 商品库存     |
+| 名称        | 类型    | 示例值                                         | 描述               |
+| ----------- | ------- | ---------------------------------------------- | ------------------ |
+| productName | String  | 矿泉水                                         | 商品名称           |
+| productId   | String  | 5a38d03a60b6286d9c544f58                       | 商品唯一标识       |
+| imageUrl    | String  | http://images.sp.yunjichina.com.cn/goods/s.png | 产品图片           |
+| unitPrice   | Decimal | 1120                                           | 商品单价,单位为分  |
+| actualPrice | Decimal | 1120                                           | 实际售价，单位为分 |
+| storage     | Int     | 999                                            | 商品库存           |
 
 #### PaginationType参数说明
 | 名称     | 类型 | 示例值 | 描述     |
@@ -771,8 +783,8 @@ guestSuppliesCode=10001<br/>
             "productName": "矿泉水",
             "productId": "5a38d03a60b6286d9c544f58",
             "imageUrl"::"http://images.sp.yunjichina.com.cn/goods/s.png",
-            "unitPrice": 1.50,
-            "actualPrice": 1.50,
+            "unitPrice": 150,
+            "actualPrice": 150,
             "storage": 23
         }
     ],
