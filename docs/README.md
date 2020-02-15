@@ -91,7 +91,7 @@
 | Python     | [pythonSign.py](https://github.com/yunji-ai/open-api/blob/master/examples/pythonSign.py)         |
 | C          | [CSign.c](https://github.com/yunji-ai/open-api/examples/CSign.c)                                 |
 | C++        | [C++Sign.cc](https://github.com/yunji-ai/open-api/examples/C++Sign.cc)                           |
-| Go         | [goSign.go](https://github.com/yunji-ai/open-api/examples/goSign.go)                           |
+| Go         | [goSign.go](https://github.com/yunji-ai/open-api/examples/goSign.go)                             |
 
 ### 返回结果
 #### 成功结果
@@ -190,7 +190,7 @@
     "orderInfo": {
         "orderSN": 223445452233,
         "createDate": "2019-10-01T12:00:18Z",
-         "orderTaskInfos": [
+        "orderTaskInfos": [
             {
                 "orderTaskId": "5a38d03a60b6286d9c544f58",
                 "createDate": "2019-10-01T12:00:18Z",
@@ -328,7 +328,7 @@ orderSN=32938472<br/>
                 "taskType": 1,
                 "admissionCertificate": 1212,
                 "detail": [
-                    {1
+                    {
                       "productId": "5a38d03a60b6286d9c544f58",
                       "productName": "矿泉水",
                       "imageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
