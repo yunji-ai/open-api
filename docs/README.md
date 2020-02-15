@@ -137,10 +137,17 @@
 | orderInfo | OrderInfoType |                                      | 订单信息 |
 
 #### OrderInfoType参数说明
-| 名称       | 类型   | 示例值               | 描述     |
-| ---------- | ------ | -------------------- | -------- |
-| orderSN    | Long   | 223445452233         | 订单号   |
-| createDate | String | 2019-10-01T12:00:18Z | 创建时间 |
+| 名称           | 类型                          | 示例值               | 描述         |
+| -------------- | ----------------------------- | -------------------- | ------------ |
+| orderSN        | Long                          | 223445452233         | 订单号       |
+| createDate     | String                        | 2019-10-01T12:00:18Z | 创建时间     |
+| orderTaskInfos | List&lt;OrderTaskInfoType&gt; |                      | 订单任务信息 |
+
+#### OrderTaskInfoType参数说明
+| 名称        | 类型   | 示例值                   | 描述         |
+| ----------- | ------ | ------------------------ | ------------ |
+| orderTaskId | String | 5a38d03a60b6286d9c544f58 | 订单子任务Id |
+| createDate  | String | 2019-10-01T12:00:18Z     | 任务创建时间 |
 
 
 #### 示例
@@ -171,6 +178,12 @@
     "orderInfo": {
         "orderSN": 223445452233,
         "createDate": "2019-10-01T12:00:18Z",
+         "orderTaskInfos": [
+            {
+                "orderTaskId": "5a38d03a60b6286d9c544f58",
+                "createDate": "2019-10-01T12:00:18Z",
+            }
+        ],
     }
 }
 ```
@@ -220,6 +233,7 @@
 | processStatus        | Int                    | 1                        | 任务状态                                                               |
 | taskType             | Int                    | 1                        | 任务类型,0-发货员协同派送 1-机器人自动派送 2-货柜机器人派送 3-无需派送 |
 | admissionCertificate | String                 | 1923                     | 数字凭证或取物码，当商户在后台配置商品需通过取物码取货时，该字段将返回 |
+| createDate           | String                 | 2019-10-01T12:00:18Z     | 任务创建时间                                                           |
 
 #### DetailType参数说明
 | 名称        | 类型   | 示例值                                              | 描述         |
@@ -308,7 +322,8 @@ orderSN=32938472<br/>
                       "imageUrl": "http://images.sp.yunjichina.com.cn/goods/s.png",
                       "quantity": 1
                     }
-                ]
+                ],
+                "createDate": "2019-10-01T12:00:18Z",
             }
         ],
         "orderBasicInfos": {
