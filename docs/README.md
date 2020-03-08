@@ -123,7 +123,7 @@
 | 名称          | 类型                          | 是否必选 | 示例值                   | 描述                                 |
 | ------------- | ----------------------------- | -------- | ------------------------ | ------------------------------------ |
 | userId        | String                        | 是       | 5a38d03a60b6286d9c544f58 | 用户唯一标识，可通过创建用户接口创建 |
-| storeId       | String                        | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配               |
+| storeId       | String                        | 是       | 5a38d03a60b6286d9c544f58 |门店唯一标识，账户分配             |
 | orderFormInfo | List&lt;OrderFormInfoType&gt; | 是       |                          | 订单信息                             |
 | thirdPayType  | Int                           | 是       | 3                        | 3：预付                              |
 | amount        | Decimal                       | 是       | 12.0                     | 订单实际支付总金额                   |
@@ -298,7 +298,7 @@
 https://open-api.yunjiai.cn/v1/order/queryByOrderSN?<br/>
 orderSN=32938472<br/>
 &signatureNonce=349sjf2j334j<br/>
-&timestamp=1243324234<br/>
+&timestamp=2019-10-10T08:26:01Z<br/>
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
 
@@ -445,7 +445,7 @@ orderSN=32938472<br/>
 https://open-api.yunjiai.cn/v1/order/queryByOrderSN?<br/>
 orderSN=32938472<br/>
 &signatureNonce=349sjf2j334j<br/>
-&timestamp=1243324234<br/>
+&timestamp=2019-10-10T08:26:01Z<br/>
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
 
@@ -537,7 +537,7 @@ orderSN=32938472<br/>
 #### 请求参数
 | 名称     | 类型   | 是否必选 | 示例值                   | 描述                   |
 | -------- | ------ | -------- | ------------------------ | ---------------------- |
-| storeId  | String | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配 |
+| storeId  | String | 是       | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
 | pageSize | Int    | 否       | 20                       | 条数                   |
 | current  | Int    | 否       | 1                        | 当前页数               |
 
@@ -571,7 +571,7 @@ orderSN=32938472<br/>
 https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
 &pageSize=20<br />
 &signatureNonce=349sjf2j334j<br />
-&timestamp=1243324234<br />
+&timestamp=2019-10-10T08:26:01Z<br />
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br />
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced<br />
 &storeId=5a38d03a60b6286d9c544f58
@@ -639,7 +639,7 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?<br />current=1<br />
 
 https://open-api.yunjiai.cn/v1/goods/queryByStore?
 &signatureNonce=349sjf2j334j<br />
-&timestamp=1243324234<br />
+&timestamp=2019-10-10T08:26:01Z<br />
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br />
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced<br />
 &storeId=5a38d03a60b6286d9c544f58
@@ -694,7 +694,7 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?
 
 https://open-api.yunjiai.cn/v1/goods/guestSuppliesList?<br/>
 signatureNonce=349sjf2j334j<br/>
-&timestamp=1243324234<br/>
+&timestamp=2019-10-10T08:26:01Z<br/>
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced
 
@@ -732,7 +732,7 @@ signatureNonce=349sjf2j334j<br/>
 #### 请求参数
 | 名称              | 类型   | 是否必选 | 示例值                   | 描述                   |
 | ----------------- | ------ | -------- | ------------------------ | ---------------------- |
-| storeId           | String | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配 |
+| storeId           | String | 是       | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
 | guestSuppliesCode | Int    | 是       | 10001                    | 客用品分类代码         |
 | pageSize          | Int    | 否       | 20                       | 条数，默认值20         |
 | current           | Int    | 否       | 1                        | 当前页数，默认值1      |
@@ -769,7 +769,7 @@ guestSuppliesCode=10001<br/>
 &current=1<br/>
 &pageSize=20<br/>
 &signatureNonce=349sjf2j334j<br/>
-&timestamp=1243324234<br/>
+&timestamp=2019-10-10T08:26:01Z<br/>
 &sign=39bcfd48c3dd6fbcc19eead125917971e9bf2d61<br/>
 &accessKeyId=c0a55b403ac0f7ac9e63c93ced<br/>
 &storeId=5a38d03a60b6286d9c544f58<br/>
@@ -810,7 +810,7 @@ guestSuppliesCode=10001<br/>
 | uidKey      | String | 是       | 0802                     | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
 | mobilePhone | String | 否       | 86-178398290238          | 用户手机号                                                           |
 | userName    | String | 否       | 张三                     | 指定用户名                                                           |
-| storeId     | String | 是       | 5a38d03a60b6286d9c544f58 | 酒店唯一标识，账户分配                                               |
+| storeId     | String | 是       | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配                                              |
 
 #### 返回参数
 | 名称      | 类型   | 示例值                               | 描述         |
@@ -884,7 +884,7 @@ https://open-api.yunjiai.cn/v1/position/query?type=1
 #### 推送参数
 | 名称       | 类型   | 示例值                   | 描述                                                                 |
 | ---------- | ------ | ------------------------ | -------------------------------------------------------------------- |
-| storeId    | String | 5a38d03a60b6286d9c544f58 | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| storeId    | String | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
 | orderSN    | Long   | 223445452233             | 订单唯一标识                                                         |
 | taskId     | String | 5a38d03a60b6286d9c544f58 | 失败任务id                                                           |
 | errorCode  | Int    | 1290                     | 失败错误码                                                           |
@@ -909,7 +909,7 @@ https://open-api.yunjiai.cn/v1/position/query?type=1
 #### 推送参数
 | 名称       | 类型   | 示例值                   | 描述                                                                 |
 | ---------- | ------ | ------------------------ | -------------------------------------------------------------------- |
-| storeId    | String | 5a38d03a60b6286d9c544f58 | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| storeId    | String | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
 | orderSN    | Long   | 223445452233             | 订单唯一标识                                                         |
 | taskId     | String | 5a38d03a60b6286d9c544f58 | 失败任务id                                                           |
 | createTime | Long   | 1575629914274            | 推送时间戳，格式为UTC                                                |
@@ -929,7 +929,7 @@ https://open-api.yunjiai.cn/v1/position/query?type=1
 #### 推送参数
 | 名称       | 类型   | 示例值                   | 描述                                                                 |
 | ---------- | ------ | ------------------------ | -------------------------------------------------------------------- |
-| storeId    | String | 5a38d03a60b6286d9c544f58 | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| storeId    | String | 5a38d03a60b6286d9c544f58 | 门店唯一标识 |
 | orderSN    | Long   | 223445452233             | 订单唯一标识                                                         |
 | taskId     | String | 5a38d03a60b6286d9c544f58 | 失败任务id                                                           |
 | createTime | Long   | 1575629914274            | 推送时间戳，格式为UTC                                                |
@@ -949,7 +949,7 @@ https://open-api.yunjiai.cn/v1/position/query?type=1
 #### 推送参数
 | 名称       | 类型   | 示例值                   | 描述                                                                 |
 | ---------- | ------ | ------------------------ | -------------------------------------------------------------------- |
-| storeId    | String | 5a38d03a60b6286d9c544f58 | 用户唯一标志，可以是手机号也可以是房间号，系统将根据改字段生成用户id |
+| storeId    | String | 5a38d03a60b6286d9c544f58 | 门店唯一标识，账户分配 |
 | orderSN    | Long   | 223445452233             | 订单唯一标识                                                         |
 | taskId     | String | 5a38d03a60b6286d9c544f58 | 失败任务id                                                           |
 | createTime | Long   | 1575629914274            | 推送时间戳，格式为UTC                                                |
