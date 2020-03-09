@@ -680,9 +680,9 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?
 | ----------------- | --------------------------------- | ------------------------------------ | ------------------ |
 | requestId         | String                            | 0139d33c-5204-4a6a-8830-9947c6bee3c0 | 请求id             |
 | version           | Int                               | 20190828                             | 当前分类版本号     |
-| guestSuppliesList | List&lt;GuestSuppliesListType&gt; |                                      | 客用品分类代码列表 |
+| guestSuppliesCodeList | List&lt;GuestSuppliesCodeItemType&gt; |                                      | 客用品分类代码列表 |
 
-#### GuestSuppliesListType参数说明
+#### GuestSuppliesCodeItemType 参数说明
 | 名称       | 类型   | 示例值 | 描述                               |
 | ---------- | ------ | ------ | ---------------------------------- |
 | code       | Int    | 10001  | 客需品对应类别id                   |
@@ -836,7 +836,7 @@ guestSuppliesCode=10001<br/>
 ```
 
 ## 地点
-## 根据送货类型返回门店下所有点位
+### 根据送货类型返回门店下所有点位
 > GET /v1/position/query
 
 #### 请求参数
