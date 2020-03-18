@@ -686,7 +686,7 @@ https://open-api.yunjiai.cn/v1/goods/queryByStore?
 | 名称       | 类型   | 示例值 | 描述                               |
 | ---------- | ------ | ------ | ---------------------------------- |
 | code       | Int    | 10001  | 客需品对应类别id                   |
-| categoryId | Int    | 1      | 客需品类别id,1-洗护用品;2-生活用品 |
+| categoryId | Int    | 1      | 客需品类别id,1-洗护用品;2-生活用品 3-医护用品|
 | comment    | String | 沐浴露 | 客需品对应分类名称                 |
 
 #### 示例
